@@ -4,16 +4,15 @@ import Data.List
 type BoundsClaim = (Int, (Int, Int), (Int, Int))
 
 main = do
-    p1
-    p2 
-
-p1 = do 
     xs <- map parseInput . lines <$> readFile "./day3.txt"
-    print $ length $ getAllOverlapSquares xs
+    p1 xs
+    p2 xs
 
-p2 = do
-    xs <- map parseInput . lines <$> readFile "./day3.txt"
-    print $ getNonOverlapping xs 
+p1 :: [BoundsClaim] -> IO ()
+p1 xs = print $ length $ getAllOverlapSquares xs
+
+p2 :: [BoundsClaim] -> IO ()
+p2 xs = print $ getNonOverlapping xs 
 
 getAllOverlapSquares :: [BoundsClaim] -> Set.Set (Int, Int)
 getAllOverlapSquares xs = foldr (\(c1, c2) acc -> if overlap c1 c2 then Set.union acc $ getOverlapRectangle c1 c2 else acc) Set.empty claimPairs
